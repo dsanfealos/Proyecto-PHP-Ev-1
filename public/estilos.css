@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    text-align: center;
+}
+header{
+    color: red;
+    margin: 10px;
+}
+button{
+    background-color: lightgrey;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+footer{
+    position: absolute;
+    color: white;
+    bottom: 5px;
+    text-align: center;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
+    border-top: solid 2px red;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: grey;
+}
