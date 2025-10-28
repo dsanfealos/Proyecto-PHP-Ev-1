@@ -1,6 +1,7 @@
 <?php
 
     namespace config;
+    include_once dirname(__FILE__) . "/../../vendor/autoload.php";
     use Dotenv\Dotenv;
     use PDO;
 class Config
@@ -12,7 +13,7 @@ class Config
     private $postgresHost;
     private $postgresPort;
     private $db;
-    private $rootPath = '/var/www/html/public/';
+    private $rootPath = '/var/www/html/'; #Arreglado para que busque el .env en root
     private $uploadPath = '/var/www/html/public/uploads/';
     private $uploadUrl = 'http://localhost:8080/uploads/';
 
@@ -26,7 +27,7 @@ class Config
         $this->postgresPassword = getenv('POSTGRES_PASSWORD') ?? 'default_password';
         $this->postgresHost = getenv('POSTGRES_HOST') ?? 'localhost';
         $this->postgresPort = getenv('POSTGRES_PORT') ?? '5432';
-        $this->db = new PDO("pgsql:host={$this->postgresHost};port={$this->postgresPort}");
+        $this->db = new PDO("pgsql:host={$this->postgresHost};port={$this->postgresPort};dbname={$this->postgresDb}", $this->postgresUser, $this->postgresPassword);
     }
 
     public static function getInstance(): Config

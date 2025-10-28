@@ -16,7 +16,7 @@ services:
       DATABASE_USER: ${POSTGRES_USER}
       DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
       DATABASE_NAME: ${POSTGRES_DB}
-      APACHE_DOCUMENT_ROOT: /var/www/html/public # Así Apache busca index (estaba src, pero pongo public para que se vea index.php)
+      APACHE_DOCUMENT_ROOT: /var/www/html/src # Así Apache busca index (estaba src, pero pongo public para que se vea index.php)
     networks:
       - tienda-network
   postgres-db:
