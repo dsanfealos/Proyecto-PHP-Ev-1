@@ -22,15 +22,14 @@
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $categoria = new Categoria(
                     $row['id'],
+                    $row['uuid'],
                     $row['nombre'],
                     $row['created_at'],
                     $row['updated_at'],
                     $row['is_deleted']
                 );
 
-                #Revisar porque yo ahí no veo un index 
-                #para decir en qué parte del array se mete 
-                #la nueva categoría.
+    
                 $categorias[]=$categoria;
             }
 
@@ -49,6 +48,7 @@
             }
             $categoria = new Categoria(
                 $row['id'],
+                $row['uuid'],
                 $row['nombre'],
                 $row['created_at'],
                 $row['updated_at'],

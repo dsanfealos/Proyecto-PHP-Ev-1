@@ -2,6 +2,8 @@
 
     namespace models;
 
+    use Ramsey\Uuid\Uuid;
+
     class Producto {
         private $id;
         private $uuid;
@@ -14,25 +16,33 @@
         private $createdAt;
         private $updatedAt;
         private $categoriaId;
-        private $categoriaNombre;
         private $isDeleted;
 
-        #Falta revisar lo de "constructor flexible"
-        public function __construct( $id,  $uuid,  $descripcion,  $imagen,  $marca,  $modelo,  
-            $precio,  $stock,  $createdAt,  $updatedAt,  $categoriaId,  $categoriaNombre,  $isDeleted){
-                $this->id = $id;
-                $this->uuid = $uuid;
-                $this->descripcion = $descripcion;
-                $this->imagen = $imagen;
-                $this->marca = $marca;
-                $this->modelo = $modelo;
-                $this->precio = $precio;
-                $this->stock = $stock;
-                $this->createdAt = $createdAt;
-                $this->updatedAt = $updatedAt;
-                $this->categoriaId = $categoriaId;
-                $this->categoriaNombre = $categoriaNombre;
-                $this->isDeleted = $isDeleted;
+        public function __construct($marca, $modelo, $precio, $categoriaId){
+            $this->marca = $marca;
+            $this->modelo = $modelo;
+            $this->precio = $precio;
+            $this->createdAt = date("Y-m-d H:i:s", time());
+            $this->isDeleted = false;
+            $this->categoriaId = $categoriaId;
+            $this->uuid = $this->generateUUID();
+        }
+
+        #"constructor flexible"
+        public static function __constructFull($id, $uuid, $descripcion,  $imagen,  $marca,  $modelo,  
+            $precio,  $stock, $createdAt, $updatedAt,  $categoriaId,  $isDeleted){
+
+                $instance = new self($marca, $modelo, $precio, $categoriaId);
+                
+                $instance->id = $id;
+                $instance->uuid = $uuid;
+                $instance->descripcion = $descripcion;
+                $instance->imagen = $imagen;
+                $instance->stock = $stock;
+                $instance->updatedAt = $updatedAt;
+                $instance->isDeleted = $isDeleted;
+                $instance->createdAt = $createdAt;
+            return $instance;
         }
 
         public function __get($name)
@@ -43,6 +53,10 @@
         public function __set($name, $value)
         {
             $this->$name = $value;
+        }
+
+        public function generateUUID(){
+            return Uuid::uuid4()->toString();
         }
     }
 ?>

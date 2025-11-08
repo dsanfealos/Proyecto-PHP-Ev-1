@@ -20,7 +20,7 @@ CREATE TABLE "public"."productos"
     "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
     "id" bigint DEFAULT nextval('productos_id_seq'),
     "updated_at" timestamp DEFAULT CURRENT_TIMESTAMP,
-    "categoria_id" uuid,
+    "categoria_id" bigint,
     "uuid" uuid,
     "descripcion" character varying(255),
     "imagen" text DEFAULT 'https://via.placeholder.com',
@@ -33,16 +33,16 @@ CREATE TABLE "public"."productos"
 INSERT INTO "productos" ("is_deleted", "precio", "stock", "created_at",
     "updated_at", "categoria_id", "uuid",
     "descripcion", "imagen", "marca", "modelo")
-    VALUES (false, 10.99, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, gen_random_uuid(), 
-        'Zapatillas deportivas', 'https://via.placeholder.com/150', 'Nike', 'Modelo1'),
-        (false, 19.99, 10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, gen_random_uuid(), 
-        'Camiseta deportiva', 'https://via.placeholder.com/150', 'Adidas', 'Modelo2'),
-        (false, 15.99, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, gen_random_uuid(), 
-        'Pantalón de entrenamiento', 'https://via.placeholder.com/150', 'Nike', 'Modelo3'),
-        (false, 25.99, 8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, gen_random_uuid(), 
-        'Sudadera con capucha', 'https://via.placeholder.com/150', 'Nike', 'Modelo4'),
-        (false, 12.99, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL, gen_random_uuid(), 
-        'Calcetines deportivos', 'https://via.placeholder.com/150', 'Adidas', 'Modelo5');
+    VALUES (false, 10.99, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
+        'Zapatillas deportivas', 'https://via.placeholder.com/150', 'Nike', 'Zapas 2300 Nike'),
+        (false, 19.99, 10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, gen_random_uuid(), 
+        'Chupito Ron y Cazalla', 'https://via.placeholder.com/150', 'Jagermeister', 'Chupito Turbo'),
+        (false, 15.99, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
+        'Pantalón de entrenamiento', 'https://via.placeholder.com/150', 'Nike', 'Pantalón chandal Nike Plus'),
+        (false, 25.99, 8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, gen_random_uuid(), 
+        'Hamburguesa grande', 'https://via.placeholder.com/150', 'KFC', 'Burgesote Max'),
+        (false, 12.99, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
+        'Calcetines deportivos', 'https://via.placeholder.com/150', 'Adidas', 'Calcetines Mickey');
 
 CREATE TABLE "public"."user_roles"
 (
@@ -88,18 +88,21 @@ INSERT INTO "usuarios" ("is_deleted", "created_at", "id", "updated_at",
         (false, '2023-11-02 11:43:24.736674', 4, '2023-11-02 11:43:24.736674', 'Guest', 'guest@example.com', 
         'Invitado', '$2a$12$3Q4.UZbvBMBEvIwwjGEjae/zrIr6S50NusUlBcCNmBd2382eyU0bS', 'guest1');
 
+CREATE SEQUENCE categorias_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1;
+
 CREATE TABLE "public"."categorias"
     (
     "is_deleted" boolean DEFAULT false,
     "created_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updated_at" timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "id" uuid NOT NULL,
+    "id" bigint DEFAULT nextval('categorias_id_seq') NOT NULL,
+    "uuid" uuid,
     "nombre" character varying(255) NOT NULL,
     CONSTRAINT "categorias_nombre_key" UNIQUE ("nombre"),
     CONSTRAINT "categorias_pkey" PRIMARY KEY ("id")
     ) WITH (oids = false);
 
-INSERT INTO "categorias" ("is_deleted", "created_at", "updated_at", "id", "nombre")
+INSERT INTO "categorias" ("is_deleted", "created_at", "updated_at", "uuid", "nombre")
     VALUES (false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, gen_random_uuid(), 'DEPORTES'),
         (false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, gen_random_uuid(), 'COMIDA'),
         (false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, gen_random_uuid(), 'BEBIDA'),
