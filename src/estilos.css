@@ -4,10 +4,7 @@
 }
 body{
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    margin-bottom: 50px;
 }
 header{
     color: red;
@@ -21,6 +18,8 @@ nav{
     margin-right: 10%;
     min-width: 80%;
     border: 2px red solid;
+    border-radius: 5px;
+    margin-bottom: 20px;
 }
 nav li{
     list-style: none;
@@ -40,9 +39,9 @@ button{
     margin: 5px;
 }
 footer{
-    position: absolute;
+    position: fixed;
     color: white;
-    bottom: 5px;
+    bottom: 0;
     text-align: center;
     width: 98%;
     margin-left: 1%;
@@ -52,12 +51,53 @@ footer{
     padding-bottom: 5px;
     background-color: grey;
 }
+
 #listado{
     margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70%;
-    border: 2px solid black;
-    border-radius: 10px;
+    width: 100%;
+    text-align: start;
+}
+#tabla-listado{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font: 0.9em;
+    min-width: 70%;
+    padding-left: 5px;
+    border-bottom: 2px solid brown;
+    border-radius: 5px 5px 0px 0px;
+    overflow: hidden;
+}
+#tabla-listado thead tr{
+    background-color: brown;
+    color: white;
+    text-align: left;
+}
+#tabla-listado td, #tabla-listado th{
+    padding: 12px 15px;
+}
+#tabla-listado tbody tr{
+    border-bottom: 1px solid lightgrey;
+}
+#tabla-listado a{
+    text-decoration: none;
+    color: black;
+}
+
+#login-form{
+    margin-top: 20px;
+    padding: 15px;
+    border: 2px green solid;
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+#log-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }

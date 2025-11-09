@@ -56,5 +56,24 @@
             );
             return $categoria;
         }
+
+        public function findById($id){
+            $stmt = $this->pdo->prepare("SELECT * FROM categorias WHERE id = :id");
+            $stmt->execute(['id' => $id]);
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$row) {
+                return false;
+            }
+            $categoria = new Categoria(
+                $row['id'],
+                $row['uuid'],
+                $row['nombre'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['is_deleted']
+            );
+            return $categoria;
+        }
     }
 ?>

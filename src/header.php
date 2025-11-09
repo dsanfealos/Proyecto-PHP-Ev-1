@@ -8,9 +8,9 @@
         </header>
         <nav>
             <ul>
-                <li><a href="">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="">Crear Producto</a></li>
-                <li><a href="">Cerrar sesión</a></li>
+                <li><a href="logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
     </body>

@@ -9,8 +9,8 @@
     </head>
     <body>
         <h1>Login</h1>
-        <div>
-            <form action="" method="post">
+        <div class="log-div">
+            <form action="/" method="post" id="login-form">
                 <label for="username">Usuario: </label>
                 <input type="text" name="username" placeholder="Username...">
                 <label for="passwd">Contraseña: </label>
