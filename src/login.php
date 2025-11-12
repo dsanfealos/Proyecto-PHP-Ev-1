@@ -5,19 +5,29 @@
 <html>
     <head>
         <title>Login</title>
-        <link href="estilos.css" type="text/css" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <!--<link href="estilos.css" type="text/css" rel="stylesheet">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+            rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+            crossorigin="anonymous">
     </head>
-    <body>
-        <h1>Login</h1>
-        <div class="log-div">
+    <body class="m-5">
+        <h1 class="text-center mt-4">Login</h1>
+        <div class="log-div m-4">
             <form action="/" method="post" id="login-form">
-                <label for="username">Usuario: </label>
-                <input type="text" name="username" placeholder="Username...">
-                <label for="passwd">Contraseña: </label>
-                <input type="password" name="passwd" placeholder="Password...">
-                <button type="submit">Iniciar sesión</button>
-                <button type="button">Registarse</button>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Usuario: </label>
+                    <input type="text" class="form-control" name="username" placeholder="Username...">
+                </div>
+                <div class="mb-3">
+                    <label for="passwd" class="form-label">Contraseña: </label>
+                    <input type="password" class="form-control" name="passwd" placeholder="Password...">
+                </div>
+                <button type="submit" class="btn btn-success">Iniciar sesión</button>
+                <button type="button" class="btn btn-primary">Registarse</button>
             </form>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
     </body>
 </html>

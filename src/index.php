@@ -13,15 +13,19 @@
 
 <html>    
     <head>
-        <title>Prueba</title>
-        <link href="estilos.css" type="text/css" rel="stylesheet">
+        <title>Home</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <!--<link href="estilos.css" type="text/css" rel="stylesheet">-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+            rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+            crossorigin="anonymous">
     </head>
-    <body>
-        <content>
-
-            <div id="listado">
-                <table id="tabla-listado">
-                    <thead>
+    <body class="m-5 pb-4">
+        <content class="m-4">
+            <h2 class="text-center pt-4">Lista de Productos</h2>
+            <div id="listado" class="mt-5 m-5">
+                <table id="tabla-listado" class="table table-striped-columns table-responsive table-bordered border-light table-hover text-center table-dark">
+                    <thead class="table-danger">
                         <tr>
                             <th>Imagen</th>
                             <th>Id</th>
@@ -55,13 +59,21 @@
                                         <td>$producto->descripcion</td>
                                         <td>$producto->precio €</td>
                                         <td><div>
-                                            <form action='update.php' method='post'>
+                                            <form action='details.php' method='GET' class='d-inline'>
                                                 <input name='id' value='$producto->id' style='display:none;'>
-                                                <input type='submit' value='Modificar'>
+                                                <input type='submit' class='btn btn-info' value='Detalles'>
                                             </form>
-                                            <form action='delete.php' method='post'>
+                                            <form action='update-image.php' method='GET' class='d-inline'>
                                                 <input name='id' value='$producto->id' style='display:none;'>
-                                                <input type='submit' value='Eliminar'>
+                                                <input type='submit' class='btn btn-secondary' value='Cambiar Imagen'>
+                                            </form>
+                                            <form action='update.php' method='GET' class='d-inline'>
+                                                <input name='id' value='$producto->id' style='display:none;'>
+                                                <input type='submit' class='btn btn-primary' value='Modificar'>
+                                            </form>
+                                            <form action='delete.php' method='GET' class='d-inline'>
+                                                <input name='id' value='$producto->id' style='display:none;'>
+                                                <input type='submit' class='btn btn-danger' value='Eliminar'>
                                             </form>
                                         </div></td>
                                     </tr>
@@ -71,36 +83,12 @@
                     </tbody>
                     
                 </table>
+                <button class="btn btn-success"><a href="create.php" class="text-white text-decoration-none">Crear Producto</a></button>
             </div>
             
             
             <div id="contenido-test">
                 <?php
-                    echo "Buenas tardes.<br>";
-                    echo "Categorías: <br>";
-
-
-                    $categorias = $categoriasService->findAll();
-                    $count = 1;
-                    foreach($categorias as $categoria){
-                        echo $count . " ";
-                        $count++;
-                        print_r($categoria->nombre);
-                        echo "<br>";
-                    }
-
-                    //Leer Todos
-                    echo "<br>Sección de Productos<br>";
-                    $productoService = new ProductosService($config->db);
-                    $productos = $productoService->findAll();
-                    $count = 1;
-                    foreach($productos as $producto){
-                        echo $count . " ";
-                        $count++;
-                        print_r($producto->modelo);
-                        echo "<br>";
-                    }
-
                     //Leer todos con categoría deportes
                     echo "<br>Sección de Productos con categoría Deportes<br>";
                     $productoService = new ProductosService($config->db);
@@ -111,38 +99,11 @@
                         $count++;
                         print_r($producto->modelo);
                         echo "<br>";
-                    }    
-
-                    //Leer 1
-                    echo "<br>Encontrar un solo Producto.<br>";
-                    $productoSeparado = $productoService->findByModelo("Calcetines Mickey")[0];
-                    echo "id:" . $productoSeparado->id . " | ";
-                    echo "uuid:" . $productoSeparado->uuid . " | ";
-                    echo "descripcion:" . $productoSeparado->descripcion . "<br>";
-                    echo "imagen:" . $productoSeparado->imagen . " | ";
-                    echo "marca:" . $productoSeparado->marca . " | ";
-                    echo "modelo:" . $productoSeparado->modelo . "<br>";
-                    echo "precio:" . $productoSeparado->precio . " | ";
-                    echo "stock:" . $productoSeparado->stock . " | ";
-                    echo "createdAt:" . $productoSeparado->createdAt . "<br>";
-                    echo "updatedAt:" . $productoSeparado->updatedAt . " | ";
-                    echo "categoriaId:" . $productoSeparado->categoriaId . " | ";
-                    echo "isDeleted:" . $productoSeparado->isDeleted . "<br>";
-                    
-
+                    }   
 
                     //Esto hace que se __set funcione para createdAt y isDeleted.
                     /*error_reporting(E_ALL);
                     ini_set('display_errors', 1);*/
-
-
-                    //crear
-                    /*$productoACrear = new Producto('Rolex', 'Mc and Morcilla', 521.95, 2, 'COMIDA');
-                    $productoCreado = $productoService->create($productoACrear);*/
-
-                    //borrar
-                    /*echo "Vamos a borrar el producto con id 7.<br>";
-                    $productoService->deleteById(6);*/
 
                     //Update
                     /*echo "Vamos a modificar el producto con id 8 para tener otro modelo.<br>";
@@ -153,5 +114,8 @@
                 <button type="button">Click Me!</button>
             </div>
         </content>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
     </body>
 </html>

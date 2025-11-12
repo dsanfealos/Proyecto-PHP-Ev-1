@@ -1,0 +1,3 @@
+<?php
+    //Sólo gestión
+?>
