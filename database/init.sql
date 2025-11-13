@@ -51,11 +51,11 @@ CREATE TABLE "public"."user_roles"
 ) WITH (oids = false);
 
 INSERT INTO "user_roles" ("user_id", "roles")
-    VALUES (1, 'USER'),
-    (1, 'ADMIN'),
-    (2, 'USER'),
-    (2, 'USER'),
-    (3, 'USER');
+VALUES (1, 'USER'),
+       (1, 'ADMIN'),
+       (2, 'USER'),
+       (2, 'USER'),
+       (3, 'USER');
 
 CREATE SEQUENCE usuarios_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1;
 
@@ -77,16 +77,16 @@ CREATE TABLE "public"."usuarios"
 -- Contraseña: admin Admin1
 -- Contraseña: user User1234
 -- Contraseña: test test1234
-INSERT INTO "usuarios" ("is_deleted", "created_at", "id", "updated_at",
- "apellidos", "email", "nombre", "password", "username")
-    VALUES (false, '2023-11-02 11:43:24.724871', 1, '2023-11-02 11:43:24.724871', 'Admin', 'admin@example.com', 
-        'Administrador', '$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2', 'admin1'),
-        (false, '2023-11-02 11:43:24.730431', 2, '2023-11-02 11:43:24.730431', 'User', 'user@example.com', 
-        'Usuario', '$2a$12$RUq2ScW1Kiizu5K4gKoK4OTz80.DWaruhdyfi2lZCB.KeuXTBh0S.', 'user1'),
-        (false, '2023-11-02 11:43:24.733552', 3, '2023-11-02 11:43:24.733552', 'Test', 'test@example.com', 
-        'Test', '$2a$10$Pd1yyq2NowcsDf4Cpf/ZXObYFkcycswqHAqBndE1wWJvYwRxlb.Pu', 'test1'),
-        (false, '2023-11-02 11:43:24.736674', 4, '2023-11-02 11:43:24.736674', 'Guest', 'guest@example.com', 
-        'Invitado', '$2a$12$3Q4.UZbvBMBEvIwwjGEjae/zrIr6S50NusUlBcCNmBd2382eyU0bS', 'guest1');
+INSERT INTO "usuarios" ("is_deleted", "created_at", "id", "updated_at", "apellidos", "email", "nombre", "password",
+                        "username")
+    VALUES ('f', '2023-11-02 11:43:24.724871', 1, '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin',
+        '$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2', 'admin'),
+       ('f', '2023-11-02 11:43:24.730431', 2, '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User',
+        '$2a$12$RUq2ScW1Kiizu5K4gKoK4OTz80.DWaruhdyfi2lZCB.KeuXTBh0S.', 'user'),
+       ('f', '2023-11-02 11:43:24.733552', 3, '2023-11-02 11:43:24.733552', 'Test Test', 'test@prueba.net', 'Test',
+        '$2a$10$Pd1yyq2NowcsDf4Cpf/ZXObYFkcycswqHAqBndE1wWJvYwRxlb.Pu', 'test'),
+       ('f', '2023-11-02 11:43:24.736674', 4, '2023-11-02 11:43:24.736674', 'Otro Otro', 'otro@prueba.net', 'otro',
+        '$2a$12$3Q4.UZbvBMBEvIwwjGEjae/zrIr6S50NusUlBcCNmBd2382eyU0bS', 'otro');
 
 CREATE SEQUENCE categorias_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1;
 
@@ -110,7 +110,7 @@ INSERT INTO "categorias" ("is_deleted", "created_at", "updated_at", "uuid", "nom
         (false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, gen_random_uuid(), 'OTROS');
 
 ALTER TABLE ONLY "public"."productos"
-    ADD CONSTRAINT "fk2fwq10nwymfv7fumctxt9vpgb" FOREIGN KEY (categoria_id) REFERENCES categorias(id);
+    ADD CONSTRAINT "fk2fwq10nwymfv7fumctxt9vpgb" FOREIGN KEY (categoria_id) REFERENCES categorias (id) NOT DEFERRABLE;
 
 ALTER TABLE ONLY "public"."user_roles"
-    ADD CONSTRAINT "fk2chxp26bnpqjibydrikgq4t9e" FOREIGN KEY (user_id) REFERENCES usuarios(id);
+    ADD CONSTRAINT "fk2chxp26bnpqjibydrikgq4t9e" FOREIGN KEY (user_id) REFERENCES usuarios (id) NOT DEFERRABLE;

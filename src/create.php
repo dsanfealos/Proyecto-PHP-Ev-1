@@ -62,7 +62,7 @@
                 <label class="form-label" for="">Stock: </label>
                 <input class="form-control" type="number" min="0" name="stock">
             </div>
-            <button class="btn btn-success" type="Submit">Crear</button>
+            <button class="btn btn-success" type="submit">Crear</button>
         </form>
         <?php
             if (isset($_POST['modelo'])){

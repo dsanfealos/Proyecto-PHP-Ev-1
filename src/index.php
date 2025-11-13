@@ -15,7 +15,6 @@
     <head>
         <title>Home</title>
         <link rel="icon" type="image/x-icon" href="favicon.ico">
-        <!--<link href="estilos.css" type="text/css" rel="stylesheet">-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
             rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
             crossorigin="anonymous">
@@ -24,8 +23,9 @@
         <content class="m-4">
             <h2 class="text-center pt-4">Lista de Productos</h2>
             <div id="listado" class="mt-5 m-5">
+                <!-- TODO: Crear buscador por marca o modelo -->
                 <table id="tabla-listado" class="table table-striped-columns table-responsive table-bordered border-light table-hover text-center table-dark">
-                    <thead class="table-danger">
+                    <thead class="table-success">
                         <tr>
                             <th>Imagen</th>
                             <th>Id</th>
@@ -41,7 +41,6 @@
                     <tbody>
                         <?php
                             $config = Config::getInstance();
-                            //Leer Todos
                             $productoService = new ProductosService($config->db);
                             $categoriasService = new CategoriasService($config->db);
 
@@ -50,7 +49,7 @@
                                 $categoria = $categoriasService->findById($producto->categoriaId);
                                 echo ("
                                     <tr>
-                                        <td>$producto->imagen</td>
+                                        <td><img src='$producto->imagen' alt='Imagen de producto'></td>
                                         <td>$producto->id</td>
                                         <td>$producto->marca</td>
                                         <td>$producto->modelo</td>
@@ -89,29 +88,11 @@
             
             <div id="contenido-test">
                 <?php
-                    //Leer todos con categoría deportes
-                    echo "<br>Sección de Productos con categoría Deportes<br>";
-                    $productoService = new ProductosService($config->db);
-                    $productos = $productoService->findAllWithCategoryName('DEPORTES');
-                    $count = 1;
-                    foreach($productos as $producto){
-                        echo $count . " ";
-                        $count++;
-                        print_r($producto->modelo);
-                        echo "<br>";
-                    }   
 
                     //Esto hace que se __set funcione para createdAt y isDeleted.
                     /*error_reporting(E_ALL);
                     ini_set('display_errors', 1);*/
-
-                    //Update
-                    /*echo "Vamos a modificar el producto con id 8 para tener otro modelo.<br>";
-                    $productoAModificar = $productoService->findByModelo('Mc and Morcilla');
-                    $productoAModificar->modelo = 'Burguesa de Queso';
-                    $productoService->update($productoAModificar);*/
                 ?>
-                <button type="button">Click Me!</button>
             </div>
         </content>
 
