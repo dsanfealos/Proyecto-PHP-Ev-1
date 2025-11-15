@@ -8,16 +8,17 @@
     $config = Config::getInstance();
     $prodService = new ProductosService($config->db);
 
-    $id = 0;
-    $imagen = "";
     if (isset($_GET['id'])){
         $id = $_GET['id'];
 
         $productoAEliminar = $prodService->findById($id);
         $imagen = $productoAEliminar->imagen;
         $prodService->deleteById($id);
-        //TODO: Gestionar fichero no encontrado
-        //unlink($imagen);
+
+        if (file_exists($imagen)){
+            unlink($imagen);
+        }
+
         header('Location: ' . '/');
         //TODO: Mensaje de éxito
     }else{

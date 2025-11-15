@@ -13,7 +13,7 @@ class Config
     private $postgresHost;
     private $postgresPort;
     private $db;
-    private $rootPath = '/var/www/html/'; #Arreglado para que busque el .env en root
+    private $rootPath = '/var/www/html/';
     private $uploadPath = '/var/www/html/public/uploads/';
     private $uploadUrl = 'http://localhost:8080/uploads/';
 
@@ -21,7 +21,7 @@ class Config
     {
         $dotenv = Dotenv::createImmutable($this->rootPath);
         $dotenv->load();
-        // Cargar las variables de entorno y almacenarlas en las propiedade
+        
         $this->postgresDb = getenv('POSTGRES_DB') ?? 'default_db';
         $this->postgresUser = getenv('POSTGRES_USER') ?? 'default_user';
         $this->postgresPassword = getenv('POSTGRES_PASSWORD') ?? 'default_password';
@@ -38,7 +38,6 @@ class Config
         return self::$instance;
     }
 
-    // Magic methos for get and set
     public function __get($name)
     {
         return $this->$name;

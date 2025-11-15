@@ -4,7 +4,7 @@
 
     use services\SessionService;
 
-    $sessionService = new SessionService();
+    $sessionService = SessionService::getInstance();
     $sessionService->logout();
     header("Location:index.php");
 ?>

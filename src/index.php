@@ -49,15 +49,15 @@
                                 $categoria = $categoriasService->findById($producto->categoriaId);
                                 echo ("
                                     <tr>
-                                        <td><img src='$producto->imagen' alt='Imagen de producto'></td>
-                                        <td>$producto->id</td>
-                                        <td>$producto->marca</td>
-                                        <td>$producto->modelo</td>
-                                        <td>$categoria->nombre</td>
-                                        <td>$producto->stock ud.</td>
-                                        <td>$producto->descripcion</td>
-                                        <td>$producto->precio €</td>
-                                        <td><div>
+                                        <td><img src='$producto->imagen' alt='Imagen de producto' style='width:150px; height:80px'></td>
+                                        <td class='pt-4'>$producto->id</td>
+                                        <td class='pt-4'>$producto->marca</td>
+                                        <td class='pt-4'>$producto->modelo</td>
+                                        <td class='pt-4'>$categoria->nombre</td>
+                                        <td class='pt-4'>$producto->stock ud.</td>
+                                        <td class='pt-4'>$producto->descripcion</td>
+                                        <td class='pt-4'>$producto->precio €</td>
+                                        <td class='pt-4'><div>
                                             <form action='details.php' method='GET' class='d-inline'>
                                                 <input name='id' value='$producto->id' style='display:none;'>
                                                 <input type='submit' class='btn btn-info' value='Detalles'>
@@ -88,7 +88,6 @@
             
             <div id="contenido-test">
                 <?php
-
                     //Esto hace que se __set funcione para createdAt y isDeleted.
                     /*error_reporting(E_ALL);
                     ini_set('display_errors', 1);*/

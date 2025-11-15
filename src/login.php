@@ -15,7 +15,7 @@
 
         $config = Config::getInstance();
         $usersService = new UsersService($config->db);                
-        $sessionService = new SessionService();
+        $sessionService = SessionService::getInstance();
         $usuario = $usersService->authenticate($username, $password);
         if($usuario != null){
             $sessionService->login($usuario);
