@@ -17,6 +17,10 @@
         $rol = $_COOKIE['rol'];
     }
     
+    //TODO: Sólo admin pueden crear, borrar, modificar, cambiar imagen
+    // Invitados y users pueden leer lista y leer detalles.
+
+    //TODO: Hacer modales para ciertas notificaciones
 ?>
 <html>
     <body>

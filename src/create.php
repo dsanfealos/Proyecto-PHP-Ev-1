@@ -16,6 +16,27 @@
     $categService = new CategoriasService($config->db);
 
     $listaCategorias = $categService->findAll();
+
+    if (isset($_POST['modelo'])){
+        try{
+            $marca = $_POST['marca'];
+            $modelo = $_POST['modelo'];
+            $precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+            $descripcion = $_POST['descripcion'];
+            $imagen = "";
+            $stock = $_POST['stock'];
+
+            $categoriaId = $categService->findByName($categoria)->id;
+            $productoACrear = new Producto($marca, $modelo, $precio, 
+                $categoriaId, $descripcion, $imagen, $stock);
+            $prodService->save($productoACrear);
+
+            echo("<p class='bg-success p-3 mt-3 rounded text-white'>El producto con modelo $modelo ha sido creado con éxito.</p><br>");
+        }catch(Exception $e){
+            echo ("<p class='bg-danger p-3 mt-3 rounded text-white'>Ha habido un error al crear el producto.</p><br>");
+        }
+    }
 ?>
 <html>
     <head>
@@ -56,7 +77,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="">Imagen: </label>
-                <input class="form-control" type="file" name="imagen-fichero">
+                <input class="form-control" type="text" disabled="true" name="imagen-ruta">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="">Stock: </label>
@@ -64,25 +85,6 @@
             </div>
             <button class="btn btn-success" type="submit">Crear</button>
         </form>
-        <?php
-            if (isset($_POST['modelo'])){
-                $marca = $_POST['marca'];
-                $modelo = $_POST['modelo'];
-                $precio = $_POST['precio'];
-                $categoria = $_POST['categoria'];
-                $descripcion = $_POST['descripcion'];
-                //TODO: Gestionar upload al crear
-                $imagen = ""; //$_POST['imagen-fichero'];
-                $stock = $_POST['stock'];
-
-                $categoriaId = $categService->findByName($categoria)->id;
-                $productoACrear = new Producto($marca, $modelo, $precio, 
-                    $categoriaId, $descripcion, $imagen, $stock);
-
-                $prodService->save($productoACrear);
-                echo("<p class='bg-success p-3 rounded text-white'>El producto con modelo $modelo ha sido creado con éxito.</p><br>");
-            }
-        ?>
         <button class="btn btn-primary mt-5"><a href="/" class="text-white text-decoration-none">Volver</a></button>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 

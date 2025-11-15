@@ -35,7 +35,7 @@
         $imagen = $productoAMostrar->imagen;
         $stock = $productoAMostrar->stock;
     }else{
-        echo "Ha habido un error al cargar el producto.<br>";
+        echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Ha habido un error al cargar el producto.</p><br>";
     }
 ?>
 <html>

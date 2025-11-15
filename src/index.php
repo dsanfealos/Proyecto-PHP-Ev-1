@@ -21,9 +21,17 @@
     </head>
     <body class="m-5 pb-4">
         <content class="m-4">
-            <h2 class="text-center pt-4">Lista de Productos</h2>
+            <h2 class="text-center pt-4 mb-4">Lista de Productos</h2>
+            <form action="" class="mx-5 d-inline" method="get">
+                <input class="form-control w-25 d-inline" name="busca-marca" type="text" placeholder="Marca...">
+                <button class="btn btn-primary d-inline" type="submit">Buscar</button>
+            </form>
+            <form action="" class="mx-5 d-inline" method="get">
+                <input class="form-control w-25 d-inline" name="busca-modelo" type="text" placeholder="Modelo...">
+                <button class="btn btn-primary d-inline" type="submit">Buscar</button>
+            </form>
+            <button class="btn btn-primary"><a href="/" class="text-white text-decoration-none">Ver todos</a></button>
             <div id="listado" class="mt-5 m-5">
-                <!-- TODO: Crear buscador por marca o modelo -->
                 <table id="tabla-listado" class="table table-striped-columns table-responsive table-bordered border-light table-hover text-center table-dark">
                     <thead class="table-success">
                         <tr>
@@ -44,7 +52,16 @@
                             $productoService = new ProductosService($config->db);
                             $categoriasService = new CategoriasService($config->db);
 
-                            $productos = $productoService->findAll();
+                            if(isset($_GET['busca-marca'])){
+                                $buscaMarca = $_GET['busca-marca'];
+                                $productos = $productoService->findByMarca($buscaMarca);
+
+                            }else if(isset($_GET['busca-modelo'])){
+                                $buscaModelo = $_GET['busca-modelo'];
+                                $productos = $productoService->findByModelo($buscaModelo);
+                            }else{
+                                $productos = $productoService->findAll();
+                            }
                             foreach($productos as $producto){
                                 $categoria = $categoriasService->findById($producto->categoriaId);
                                 echo ("

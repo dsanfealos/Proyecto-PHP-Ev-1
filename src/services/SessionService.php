@@ -7,10 +7,11 @@ class SessionService
     private $expiresInSeconds = 3600;
   
     private function __construct(){
-        if(session_status() === PHP_SESSION_NONE) {
-            session_start();
+        
+        if(session_status() != PHP_SESSION_NONE) {
+            $this->comprobarTiempoSesion();
         }
-        $this->comprobarTiempoSesion();
+        
     }
 
     public static function getInstance(){
@@ -21,6 +22,9 @@ class SessionService
     }
 
     public function login($usuario){
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $roles = [];
         foreach($usuario->roles as $rol){
@@ -35,8 +39,8 @@ class SessionService
         $_SESSION['last_action'] = time();
         $_SESSION['logged_in'] = true;
 
-        setcookie("usuario", $_SESSION['user'], time() + 1800, "/");
-        setcookie("rol", $_SESSION['rol'], time() + 1800, "/");
+        setcookie("usuario", $_SESSION['user'], time() + $this->expiresInSeconds, "/");
+        setcookie("rol", $_SESSION['rol'], time() + $this->expiresInSeconds, "/");
     }
  
     public function logout(){

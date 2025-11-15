@@ -12,10 +12,9 @@
 
     $id = 0;
 
-    //Sólo gestión
     if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         if(!isset($_GET['id'])){
-            echo "No se ha encontrado el producto asociado";
+            echo "<p class='bg-danger p-3 mt-3 rounded text-white'>No se ha encontrado el producto asociado</p>";
             return;
         }
         
@@ -45,15 +44,16 @@
                     $producto->imagen = $rutaAcceso;
                     $prodService->update($producto);
                     header("Location:index.php");
+                    //TODO: Mostrar mensaje de éxito (modal o index.php)
                     
                 }else{
-                    echo "Error al subir archivo o al moverlo.<br>";
+                    echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Error al mover el fichero al directorio correcto.</p><br>";
                 }
             }else{
-                echo "El fichero no tiene una estensión no permitida. Sólo pueden subirse ficheros .jpg, .jpeg y .png.";
+                echo "<p class='bg-danger p-3 mt-3 rounded text-white'>El fichero no tiene una estensión no permitida. Sólo pueden subirse ficheros .jpg, .jpeg y .png.</p>";
             }
         }else{
-            echo "Error al subir el archivo.<br>";
+            echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Error al subir el fichero.</p><br>";
         }
     }
 ?>

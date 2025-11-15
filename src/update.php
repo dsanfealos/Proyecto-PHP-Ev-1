@@ -40,6 +40,29 @@
         echo "Ha habido un error al cargar el producto.<br>";
     }
 
+    if (isset($_POST['modelo'])){
+        try{
+            $productoAModificar->marca = $_POST['marca'];
+            $productoAModificar->modelo = $_POST['modelo'];
+            $productoAModificar->precio = $_POST['precio'];
+            $categoria = $_POST['categoria'];
+            $productoAModificar->descripcion = $_POST['descripcion'];
+            $productoAModificar->stock = $_POST['stock'];
+            $productoAModificar->categoriaId = $categService->findByName($categoria)->id;
+
+            $prodService->update($productoAModificar);
+            
+            $marca = $productoAModificar->marca;
+            $modelo = $productoAModificar->modelo;
+            $precio = $productoAModificar->precio;
+            $descripcion = $productoAModificar->descripcion;
+            $imagen = $productoAModificar->imagen;
+            $stock = $productoAModificar->stock;
+            echo("<p class='bg-success p-3 mt-3 rounded text-white'>El producto con modelo $modelo ha sido modificado con éxito.</p><br>");
+        }catch(Exception $e){
+            echo("<p class='bg-danger p-3 mt-3 rounded text-white'>Ha habido un error al modificar el producto.</p><br>");
+        }
+    }
 
 ?>
 <html>
@@ -104,21 +127,6 @@
             </div>
             <button class="btn btn-success" type="Submit">Modificar</button>
         </form>
-        <?php
-            if (isset($_POST['modelo'])){
-                $productoAModificar->marca = $_POST['marca'];
-                $productoAModificar->modelo = $_POST['modelo'];
-                $productoAModificar->precio = $_POST['precio'];
-                $categoria = $_POST['categoria'];
-                $productoAModificar->descripcion = $_POST['descripcion'];
-                $productoAModificar->stock = $_POST['stock'];
-
-                $productoAModificar->categoriaId = $categService->findByName($categoria)->id;
-                
-                $prodService->update($productoAModificar);
-                echo("<p class='bg-success p-3 rounded text-white'>El producto con modelo $modelo ha sido modificado con éxito.</p><br>");
-            }
-        ?>
         <button class="btn btn-primary mt-5"><a href="/" class="text-white text-decoration-none">Volver</a></button>
         
 

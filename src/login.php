@@ -49,19 +49,6 @@
                 <button type="submit" class="btn btn-success">Iniciar sesión</button>
                 <button type="button" class="btn btn-primary">Registarse</button>
             </form>
-            <?php
-                /*if (isset($_POST['username']) && isset($_POST['passwd'])){
-                    $username = $_POST['username'];
-                    $password = $_POST['passwd'];
-
-                    $config = Config::getInstance();
-                    $usersService = new UsersService($config->db);                    
-                    $usuario = $usersService->authenticate($username, $password);
-                    if($usuario != null){
-                        header("Location:index.php");
-                    }
-                }*/
-            ?>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
             crossorigin="anonymous"></script>
