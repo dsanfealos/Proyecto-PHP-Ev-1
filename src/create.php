@@ -1,6 +1,4 @@
 <?php 
-    include_once dirname(__FILE__) . "/../src/header.php";
-    include_once dirname(__FILE__) . "/../src/footer.php";
     require_once dirname(__FILE__) . "/../src/services/ProductosService.php";
     require_once dirname(__FILE__) . "/../src/models/Producto.php";
     require_once dirname(__FILE__) . "/../src/services/CategoriasService.php";
@@ -15,6 +13,21 @@
     $prodService = new ProductosService($config->db);
     $categService = new CategoriasService($config->db);
 
+    $rol = "";
+    if (isset($_COOKIE['rol'])){
+        if ($_COOKIE['rol'] == 'ADMIN'){
+            $rol = $_COOKIE['rol'];
+        }
+    }
+
+    if($rol != 'ADMIN'){
+        header("Location:index.php?permission=0");
+        return;
+    }
+    
+    include_once dirname(__FILE__) . "/../src/header.php";
+    include_once dirname(__FILE__) . "/../src/footer.php";
+
     $listaCategorias = $categService->findAll();
 
     if (isset($_POST['modelo'])){
@@ -24,7 +37,7 @@
             $precio = $_POST['precio'];
             $categoria = $_POST['categoria'];
             $descripcion = $_POST['descripcion'];
-            $imagen = "";
+            $imagen = "uploads/defecto.jpg";
             $stock = $_POST['stock'];
 
             $categoriaId = $categService->findByName($categoria)->id;
@@ -47,7 +60,7 @@
     </head>
     <body class="m-5">
         <h2 class="text-center mt-4">Crear un Producto</h2>
-        <form class=" m-4" action="" method="POST" enctype="multipart/form-data">
+        <form class=" m-4" action="" method="POST">
             <div class="mb-3">
                 <label class="form-label" for="">Marca: </label>
                 <input class="form-control" type="text" name="marca">

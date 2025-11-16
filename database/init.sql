@@ -79,14 +79,14 @@ CREATE TABLE "public"."usuarios"
 -- Contraseña: test test1234
 INSERT INTO "usuarios" ("is_deleted", "created_at", "id", "updated_at", "apellidos", "email", "nombre", "password",
                         "username")
-    VALUES ('f', '2023-11-02 11:43:24.724871', 1, '2023-11-02 11:43:24.724871', 'Admin Admin', 'admin@prueba.net', 'Admin',
+    VALUES ('f', '2023-11-02 11:43:24.724871', 1, '2023-11-02 11:43:24.724871', 'Adminez Adminoso', 'admin@prueba.net', 'Admin',
         '$2a$10$vPaqZvZkz6jhb7U7k/V/v.5vprfNdOnh4sxi/qpPRkYTzPmFlI9p2', 'admin'),
-       ('f', '2023-11-02 11:43:24.730431', 2, '2023-11-02 11:43:24.730431', 'User User', 'user@prueba.net', 'User',
-        '$2a$12$RUq2ScW1Kiizu5K4gKoK4OTz80.DWaruhdyfi2lZCB.KeuXTBh0S.', 'user'),
-       ('f', '2023-11-02 11:43:24.733552', 3, '2023-11-02 11:43:24.733552', 'Test Test', 'test@prueba.net', 'Test',
-        '$2a$10$Pd1yyq2NowcsDf4Cpf/ZXObYFkcycswqHAqBndE1wWJvYwRxlb.Pu', 'test'),
-       ('f', '2023-11-02 11:43:24.736674', 4, '2023-11-02 11:43:24.736674', 'Otro Otro', 'otro@prueba.net', 'otro',
-        '$2a$12$3Q4.UZbvBMBEvIwwjGEjae/zrIr6S50NusUlBcCNmBd2382eyU0bS', 'otro');
+       ('f', '2023-11-02 11:43:24.730431', 2, '2023-11-02 11:43:24.730431', 'Userez Useroso', 'user@prueba.net', 'User',
+        '$2y$10$F0TuGwvAta0JC0qkv60aEOjUX5GO9qcFW2cgXYF8njl7znImp5JUe', 'user'),
+       ('f', '2023-11-02 11:43:24.733552', 3, '2023-11-02 11:43:24.733552', 'Testez Testoso', 'test@prueba.net', 'Test',
+        '$2y$10$XXsid25iLw4X/m0.l3aqy.ZMsKvAYlbPT54Y7MxXTvrN2lxa3w3yO', 'test'),
+       ('f', '2023-11-02 11:43:24.736674', 4, '2023-11-02 11:43:24.736674', 'Otrorez Otroso', 'otro@prueba.net', 'Otro',
+        '$2y$10$H/aXL1mqjBiJ6GBsTmT0numvtdDrCjCBMk/Snd/8RTnMI9Czn3O46', 'otro');
 
 CREATE SEQUENCE categorias_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1;
 

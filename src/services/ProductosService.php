@@ -15,62 +15,6 @@
             $this->pdo = $pdo;
         }
 
-        public function findByMarca($marca){
-            $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE marca = '$marca' ORDER BY id ASC;");
-            $stmt->execute();
-
-            $productos = [];
-
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $producto = Producto::__constructFull(
-                    $row['id'],
-                    $row['uuid'],
-                    $row['descripcion'],
-                    $row['imagen'],
-                    $row['marca'],
-                    $row['modelo'],
-                    $row['precio'],
-                    $row['stock'],
-                    $row['created_at'],
-                    $row['updated_at'],
-                    $row['categoria_id'],
-                    $row['is_deleted'] 
-                );
-                $productos[]=$producto;
-            }
-
-            $stmt = null;
-            return $productos;
-        }
-
-        public function findByModelo($modelo){
-            $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE modelo = '$modelo' ORDER BY id ASC;");
-            $stmt->execute();
-
-            $productos = [];
-
-            while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $producto = Producto::__constructFull(
-                    $row['id'],
-                    $row['uuid'],
-                    $row['descripcion'],
-                    $row['imagen'],
-                    $row['marca'],
-                    $row['modelo'],
-                    $row['precio'],
-                    $row['stock'],
-                    $row['created_at'],
-                    $row['updated_at'],
-                    $row['categoria_id'],
-                    $row['is_deleted'] 
-                );
-                $productos[]=$producto;
-            }
-
-            $stmt = null;
-            return $productos;
-        }
-
         public function findById($id){
             $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE id = $id ORDER BY id ASC;");
             $stmt->execute();
@@ -89,22 +33,23 @@
                     $row['created_at'],
                     $row['updated_at'],
                     $row['categoria_id'],
+                    null,
                     $row['is_deleted'] 
                 );
 
                 $stmt = null;
                 return $producto;
             }
-            return false;
+            return null;
         }
 
-        public function findAllWithCategoryName($nombre_categoria){
-            $categoriaService = new CategoriasService($this->pdo);
-            $categoria = $categoriaService->findByName($nombre_categoria);
-            $id_categoria = $categoria->id;
-
-            $stmt = $this->pdo->prepare("SELECT * FROM productos 
-            WHERE categoria_id = $id_categoria ORDER BY id ASC;");
+        public function findAllWithCategoryName($searchParam){
+            $stmt = $this->pdo
+                ->prepare("SELECT p.id, p.marca, p.modelo, p.precio, p.imagen, p.stock, p.is_deleted, p.created_at, p.updated_at, 
+                    p.uuid, p.descripcion, c.nombre AS categoria_nombre, p.categoria_id 
+                    FROM productos p JOIN categorias c 
+                    ON p.categoria_id=c.id WHERE p.marca LIKE '%$searchParam%' OR p.modelo LIKE '%$searchParam%' 
+                    ORDER BY p.id ASC;");
             $stmt->execute();
 
             $productos = [];
@@ -121,6 +66,7 @@
                     $row['created_at'],
                     $row['updated_at'],
                     $row['categoria_id'],
+                    $row['categoria_nombre'],
                     $row['is_deleted']                    
                 );
                 $productos[]=$producto;
@@ -129,33 +75,6 @@
             $stmt = null;
             return $productos;
 
-        }
-
-        public function findAll(){
-            $stmt = $this->pdo->prepare("SELECT * FROM productos ORDER BY id ASC;");
-            $stmt->execute();
-
-            $productos = [];
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $producto = Producto::__constructFull(
-                    $row['id'],
-                    $row['uuid'],
-                    $row['descripcion'],
-                    $row['imagen'],
-                    $row['marca'],
-                    $row['modelo'],
-                    $row['precio'],
-                    $row['stock'],
-                    $row['created_at'],
-                    $row['updated_at'],
-                    $row['categoria_id'],
-                    $row['is_deleted']                    
-                );
-                $productos[]=$producto;
-            }
-
-            $stmt = null;
-            return $productos;
         }
 
         public function save(Producto $producto){
@@ -196,9 +115,11 @@
             $stmt = $this->pdo->prepare("DELETE FROM productos WHERE id=$idProducto");
             if(!$stmt->execute()){
                 echo "<br>El Producto con id $idProducto no se ha podido eliminar.<br>";
+                return false;
             }
 
             $stmt = null;
+            return true;
         }
 
         public function update(Producto $producto){
@@ -225,9 +146,7 @@
                 );
 
                 
-                if($stmt->execute($datos)){
-                    //echo "<br>Se han modificado los datos del Producto $modeloAntiguo.<br>";
-                }else{
+                if(!$stmt->execute($datos)){
                     echo "<br>Ha habido un error al modificar los datos del Producto $modeloAntiguo.<br>";
                 };
 

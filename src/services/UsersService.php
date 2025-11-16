@@ -17,7 +17,7 @@
 
         public function authenticate($username, $password){
             try{
-                $usuario = $this->findUserByUserName($username);
+                $usuario = $this->findUserByUsername($username);
                 if(!$usuario){
                     echo("<p class='bg-danger p-3 rounded text-white'>¡El usuario no existe!</p><br>");
                     return null;
@@ -27,17 +27,20 @@
                 if (password_verify($password, $passwordDB)){
                     return $usuario;
                 }
+
             }catch(Exception $error){
                 echo("Error en login: " . $error->getMessage());
             }
+            
             echo("<p class='bg-danger p-3 rounded text-white'>¡La contraseña es incorrecta!</p><br>");
             return null;
         }
 
-        public function findUserByUserName($username){
+        public function findUserByUsername($username){
             $stmt = $this->pdo
                 ->prepare("SELECT * FROM usuarios WHERE username = :username");
-            $stmt->execute(['username' => $username]);
+            $stmt->bindParam(":username", $username);
+            $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             if (!$row) {

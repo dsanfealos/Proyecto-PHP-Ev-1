@@ -1,13 +1,15 @@
 <?php
+    include_once dirname(__FILE__) . "/../src/services/SessionService.php";
     include_once dirname(__FILE__) . "/../src/header.php";
     include_once dirname(__FILE__) . "/../src/footer.php";
-    include_once dirname(__FILE__) . "/../src/services/CategoriasService.php";
     include_once dirname(__FILE__) . "/../src/config/Config.php";
 
-    use services\CategoriasService;
     use config\Config;
     use models\Producto;
     use services\ProductosService;
+    use services\SessionService;
+    
+    $sessionService = SessionService::getInstance();
 
 ?>
 
@@ -22,15 +24,64 @@
     <body class="m-5 pb-4">
         <content class="m-4">
             <h2 class="text-center pt-4 mb-4">Lista de Productos</h2>
+
+            <?php
+                if($usuario != 'Invitado'){
+                    $nombreUser = $_SESSION['nombre'];
+                    $apellidoUser = $_SESSION['apellido'];
+                    echo "<h3  class='text-center pt-3 mb-3'>¡Bienvenid@, $nombreUser $apellidoUser!</h3>";
+
+                }
+
+                if(isset($_GET['permission'])){
+                    $permiso = $_GET['permission'];
+
+                    if($permiso == false){
+                        echo ("<p class='bg-danger p-3 m-5 rounded text-white'>No tienes permisos para realizar esa acción. Necesitas haber iniciado sesión como Administrador.</p><br>");
+                    }
+                }
+                
+                if(isset($_GET['error'])){
+                    $error = $_GET['error'];
+
+                    switch($error){
+                        case "update":
+                            echo ("<p class='bg-danger p-3 mx-5 mt-2 rounded text-white'>Producto a modificar no encontrado</p><br>");
+                            break;
+                        case "delete":
+                            echo ("<p class='bg-danger p-3 mx-5 mt-2 rounded text-white'>El producto a eliminar no ha sido encontrado.</p><br>");
+                            break;
+                        case "imagen-form":
+                            echo ("<p class='bg-danger p-3 mx-5 mt-2 rounded text-white'>La imagen a modificar no ha sido encontrada.</p><br>");
+                            break;
+                        case "imagen-upload":
+                            echo ("<p class='bg-danger p-3 mx-5 mt-2 rounded text-white'>La imagen no ha podido subirse correctamente.</p><br>");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if(isset($_GET['exito'])){
+                    $exito = $_GET['exito'];
+
+                    switch($exito){
+                        case "delete":
+                            echo ("<p class='bg-success p-3 mx-5 mt-2 rounded text-white'>El producto eliminado correctamente</p><br>");
+                            break;
+                        case "imagen-upload":
+                            echo ("<p class='bg-success p-3 mx-5 mt-2 rounded text-white'>La imagen ha sido modificada correctamente.</p><br>");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            ?>
+
             <form action="" class="mx-5 d-inline" method="get">
-                <input class="form-control w-25 d-inline" name="busca-marca" type="text" placeholder="Marca...">
+                <input class="form-control w-25 d-inline" name="buscador" type="text" placeholder="Marca o Modelo...">
                 <button class="btn btn-primary d-inline" type="submit">Buscar</button>
             </form>
-            <form action="" class="mx-5 d-inline" method="get">
-                <input class="form-control w-25 d-inline" name="busca-modelo" type="text" placeholder="Modelo...">
-                <button class="btn btn-primary d-inline" type="submit">Buscar</button>
-            </form>
-            <button class="btn btn-primary"><a href="/" class="text-white text-decoration-none">Ver todos</a></button>
             <div id="listado" class="mt-5 m-5">
                 <table id="tabla-listado" class="table table-striped-columns table-responsive table-bordered border-light table-hover text-center table-dark">
                     <thead class="table-success">
@@ -50,27 +101,21 @@
                         <?php
                             $config = Config::getInstance();
                             $productoService = new ProductosService($config->db);
-                            $categoriasService = new CategoriasService($config->db);
 
-                            if(isset($_GET['busca-marca'])){
-                                $buscaMarca = $_GET['busca-marca'];
-                                $productos = $productoService->findByMarca($buscaMarca);
-
-                            }else if(isset($_GET['busca-modelo'])){
-                                $buscaModelo = $_GET['busca-modelo'];
-                                $productos = $productoService->findByModelo($buscaModelo);
+                            if(isset($_GET['buscador'])){
+                                $buscador = $_GET['buscador'];
+                                $productos = $productoService->findAllWithCategoryName($buscador);
                             }else{
-                                $productos = $productoService->findAll();
+                                $productos = $productoService->findAllWithCategoryName("");
                             }
-                            foreach($productos as $producto){
-                                $categoria = $categoriasService->findById($producto->categoriaId);
+                            foreach($productos as $producto){;
                                 echo ("
                                     <tr>
                                         <td><img src='$producto->imagen' alt='Imagen de producto' style='width:150px; height:80px'></td>
                                         <td class='pt-4'>$producto->id</td>
                                         <td class='pt-4'>$producto->marca</td>
                                         <td class='pt-4'>$producto->modelo</td>
-                                        <td class='pt-4'>$categoria->nombre</td>
+                                        <td class='pt-4'>$producto->categoriaNombre</td>
                                         <td class='pt-4'>$producto->stock ud.</td>
                                         <td class='pt-4'>$producto->descripcion</td>
                                         <td class='pt-4'>$producto->precio €</td>
@@ -100,11 +145,13 @@
                     
                 </table>
                 <button class="btn btn-success"><a href="create.php" class="text-white text-decoration-none">Crear Producto</a></button>
+                <!-- TODO: Mostrar número de visitas de usuario y fecha de último login -->
             </div>
             
             
             <div id="contenido-test">
                 <?php
+
                     //Esto hace que se __set funcione para createdAt y isDeleted.
                     /*error_reporting(E_ALL);
                     ini_set('display_errors', 1);*/

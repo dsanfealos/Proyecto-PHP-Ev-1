@@ -5,6 +5,7 @@
     use services\SessionService;
 
     $sessionSvc = SessionService::getInstance();
+    $sessionSvc->comprobarTiempoSesion();
 
     $loginDisplay = "inline";
     $logoutDisplay = "none";
@@ -12,18 +13,24 @@
         $loginDisplay = "none";
         $logoutDisplay = "inline";
     }
-    $rol = "Invitado";
-    if (isset($_COOKIE['rol'])){
-        $rol = $_COOKIE['rol'];
+
+    
+    $usuario = "Invitado";
+    if (isset($_COOKIE['usuario'])){
+        $usuario = $_COOKIE['usuario'];
     }
     
-    //TODO: Sólo admin pueden crear, borrar, modificar, cambiar imagen
-    // Invitados y users pueden leer lista y leer detalles.
-
-    //TODO: Hacer modales para ciertas notificaciones
+    $rol = "";
+    if (isset($_COOKIE['rol'])){
+        if ($_COOKIE['rol'] == 'ADMIN'){
+            $rol = $_COOKIE['rol'];
+        }
+    }
+    
 ?>
 <html>
     <body>
+        <!-- TODO?: Menu responsive para moviles (desplegable) -->
         <nav class="bg-secondary" style="height:75px">
             <img src="favicon.ico" class="d-inline h-100">
             <h2 class="d-inline mx-3">Trapos y zapatos</h2>
@@ -38,6 +45,7 @@
                 
                 ?>
             </ul>
+            <p class="float-end mt-4 mx-4 text-white"><?php echo $usuario ?></p>
             <p class="float-end mt-4 mx-4 text-white"><?php echo $rol ?></p>
         </nav>
     </body>

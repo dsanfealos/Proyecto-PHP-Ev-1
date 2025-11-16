@@ -8,10 +8,25 @@
     $config = Config::getInstance();
     $prodService = new ProductosService($config->db);
 
+    $rol = "";
+    if (isset($_COOKIE['rol'])){
+        if ($_COOKIE['rol'] == 'ADMIN'){
+            $rol = $_COOKIE['rol'];
+        }
+    }
+
+    if($rol != 'ADMIN'){
+        header("Location:index.php?permission=0");
+        return;
+    }
+
     if (isset($_GET['id'])){
         $id = $_GET['id'];
 
         $productoAEliminar = $prodService->findById($id);
+        if ($productoAEliminar == null){
+            header("Location:index.php?error=delete"); 
+        }
         $imagen = $productoAEliminar->imagen;
         $prodService->deleteById($id);
 
@@ -19,9 +34,8 @@
             unlink($imagen);
         }
 
-        header('Location: ' . '/');
-        //TODO: Mensaje de éxito (modal o en index.php)
+        header('Location:index.php?exito=delete');
     }else{
-        echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Ha habido un error al cargar el producto.</p><br>";
+        header("Location:index.php?error=delete");        
     }
 ?>

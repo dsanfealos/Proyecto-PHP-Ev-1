@@ -1,6 +1,4 @@
 <?php
-    include_once dirname(__FILE__) . "/../src/header.php";
-    include_once dirname(__FILE__) . "/../src/footer.php";
     require_once dirname(__FILE__) . "/../src/services/ProductosService.php";
     require_once dirname(__FILE__) . "/../src/config/Config.php";
 
@@ -10,6 +8,17 @@
     $config = Config::getInstance();
     $prodService = new ProductosService($config->db);
 
+    $rol = "";
+    if (isset($_COOKIE['rol'])){
+        if ($_COOKIE['rol'] == 'ADMIN'){
+            $rol = $_COOKIE['rol'];
+        }
+    }
+
+    if($rol != 'ADMIN'){
+        header("Location:index.php?permission=0");
+        return;
+    }
 
     $id = 0;
     $imagen = "";
@@ -17,8 +26,16 @@
         $id = $_GET['id'];
 
         $productoAModificar = $prodService->findById($id);
+        $marca = $productoAModificar->marca;
+        $modelo = $productoAModificar->modelo;
         $imagen = $productoAModificar->imagen;
+    }else{
+        header("Location:index.php?error=imagen-form"); 
     }
+    
+
+    include_once dirname(__FILE__) . "/../src/header.php";
+    include_once dirname(__FILE__) . "/../src/footer.php";
 ?>
 <html>
     <head>
@@ -38,12 +55,20 @@
                         <input class='form-control' type='text' name='id' disabled='true' value='$id'>
                     </div>
                     <div class='mb-3'>
+                        <label class='form-label' for=''>Marca: </label>
+                        <input class='form-control' type='text' name='id' disabled='true' value='$marca'>
+                    </div>
+                    <div class='mb-3'>
+                        <label class='form-label' for=''>Modelo: </label>
+                        <input class='form-control' type='text' name='modelo' disabled='true' value='$modelo'>
+                    </div>
+                    <div class='mb-3'>
                         <label class='form-label' for=''>Imagen actual: </label>
                         <input class='form-control' type='text' name='imagen-ruta' disabled='true' value='$imagen'>
                     </div>
                     <div class='mb-3'>
                         <label class='form-label' for=''>Nueva imagen: </label>
-                        <input class='form-control' type='file' name='imagen-fichero'>
+                        <input class='form-control' type='file' accept='image/png, image/jpg, image/jpeg' name='imagen-fichero'>
                     </div>
                     <button class='btn btn-success' type='submit'>Modificar</button>
                 </form>

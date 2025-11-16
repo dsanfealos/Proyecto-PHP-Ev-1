@@ -1,6 +1,4 @@
 <?php
-    include_once dirname(__FILE__) . "/../src/header.php";
-    include_once dirname(__FILE__) . "/../src/footer.php";
     require_once dirname(__FILE__) . "/../src/services/ProductosService.php";
     include_once dirname(__FILE__) . "/../src/services/CategoriasService.php";
     include_once dirname(__FILE__) . "/../src/config/Config.php";
@@ -12,6 +10,19 @@
     $config = Config::getInstance();
     $prodService = new ProductosService($config->db);
     $categService = new CategoriasService($config->db);
+
+    $rol = "";
+    if (isset($_COOKIE['rol'])){
+        if ($_COOKIE['rol'] == 'ADMIN'){
+            $rol = $_COOKIE['rol'];
+        }
+    }
+
+    if($rol != 'ADMIN'){
+        header("Location:index.php?permission=0");
+        return;
+    }
+
 
     $listaCategorias = $categService->findAll();
 
@@ -37,8 +48,12 @@
         $imagen = $productoAModificar->imagen;
         $stock = $productoAModificar->stock;
     }else{
-        echo "Ha habido un error al cargar el producto.<br>";
+        header("Location:index.php?error=update");
     }
+    
+
+    include_once dirname(__FILE__) . "/../src/header.php";
+    include_once dirname(__FILE__) . "/../src/footer.php";
 
     if (isset($_POST['modelo'])){
         try{
@@ -75,6 +90,7 @@
     </head>
     <body class="m-5 pb-4">
         <h2 class="text-center mt-4">Modificar Producto</h2>
+        
         <form class="m-4" action="" method="POST" enctype="multipart/form-data">
             <h3>Producto con id: <?php echo($id . "<br>") ?></h3>
             <div class="mb-3">
@@ -130,7 +146,12 @@
         <button class="btn btn-primary mt-5"><a href="/" class="text-white text-decoration-none">Volver</a></button>
         
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
-            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+        <script>
+            window.addEventListener('DOMContentLoaded', ()=>{
+                new bootstrap.Modal('#modalPrueba').show();
+            })
+        </script>
     </body>
 </html>

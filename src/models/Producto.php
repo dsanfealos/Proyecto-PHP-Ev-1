@@ -16,6 +16,7 @@
         private $createdAt;
         private $updatedAt;
         private $categoriaId;
+        private $categoriaNombre;
         private $isDeleted;
 
         public function __construct($marca, $modelo, $precio, $categoriaId, $descripcion, $imagen, $stock){
@@ -34,7 +35,7 @@
 
         #"constructor flexible"
         public static function __constructFull($id, $uuid, $descripcion,  $imagen,  $marca,  $modelo,  
-            $precio,  $stock, $createdAt, $updatedAt,  $categoriaId,  $isDeleted){
+            $precio,  $stock, $createdAt, $updatedAt,  $categoriaId,  $categoriaNombre, $isDeleted){
 
                 $instance = new self($marca, $modelo, $precio, $categoriaId, $descripcion, $imagen, $stock);
                 
@@ -43,6 +44,7 @@
                 $instance->updatedAt = $updatedAt;
                 $instance->isDeleted = $isDeleted;
                 $instance->createdAt = $createdAt;
+                $instance->categoriaNombre = $categoriaNombre;
             return $instance;
         }
 

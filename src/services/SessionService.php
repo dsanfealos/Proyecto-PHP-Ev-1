@@ -3,34 +3,36 @@ namespace services;
 
 class SessionService
 {
-    private static ?SessionService $instance = null;
+    private static $instance;
     private $expiresInSeconds = 3600;
   
     private function __construct(){
-        
-        if(session_status() != PHP_SESSION_NONE) {
-            $this->comprobarTiempoSesion();
+        if(session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
+        
+        $this->comprobarTiempoSesion();
         
     }
 
-    public static function getInstance(){
-        if (self::$instance === null) {
+    public static function getInstance(): SessionService{
+        if (!isset(self::$instance)) {
             self::$instance = new SessionService();
         }
         return self::$instance;
     }
 
     public function login($usuario){
-        if(session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
         $roles = [];
         foreach($usuario->roles as $rol){
             $roles[]=$rol;
         }
+
         $_SESSION['user'] = $usuario->username;
+        $_SESSION['nombre'] = $usuario->nombre;
+        $_SESSION['apellido'] = $usuario->apellidos;
+
         if (in_array('ADMIN', $roles)){
             $_SESSION['rol'] = 'ADMIN';
         }else{
@@ -49,7 +51,7 @@ class SessionService
         session_destroy();
     }
    
-    private function comprobarTiempoSesion(){
+    public function comprobarTiempoSesion(){
         $now = time();
         if (isset($_SESSION['last_action']) && isset($_SESSION['logged_in'])) {
             $duracion = $now - $_SESSION['last_action'];

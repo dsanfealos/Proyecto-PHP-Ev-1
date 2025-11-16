@@ -34,26 +34,29 @@
             $extension = strtolower(pathinfo($nombre, PATHINFO_EXTENSION));
 
             if (in_array($tipoDetectado, $tiposPermitidos) && in_array($extension, $extensionesPermitidas)){
-                $nuevoNombre = time() . '.' . $extension;
+                $producto = $prodService->findById($id);
+
+                $nuevoNombre = $producto->uuid . '.' . $extension;
                 $rutaDestino = __DIR__ . '/uploads/' . $nuevoNombre;
                 $rutaAcceso = 'uploads/' . $nuevoNombre;
 
+                if (file_exists($rutaDestino)){
+                    unlink($rutaDestino);
+                }
                 
                 if(move_uploaded_file($tmpRuta, $rutaDestino)){
-                    $producto = $prodService->findById($id);
                     $producto->imagen = $rutaAcceso;
                     $prodService->update($producto);
-                    header("Location:index.php");
-                    //TODO: Mostrar mensaje de éxito (modal o index.php)
+                    header("Location:index.php?exito=imagen-upload");
                     
                 }else{
-                    echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Error al mover el fichero al directorio correcto.</p><br>";
+                    header("Location:index.php?error=imagen-upload"); 
                 }
             }else{
-                echo "<p class='bg-danger p-3 mt-3 rounded text-white'>El fichero no tiene una estensión no permitida. Sólo pueden subirse ficheros .jpg, .jpeg y .png.</p>";
+                header("Location:index.php?error=imagen-upload"); 
             }
         }else{
-            echo "<p class='bg-danger p-3 mt-3 rounded text-white'>Error al subir el fichero.</p><br>";
+            header("Location:index.php?error=imagen-upload"); 
         }
     }
 ?>
