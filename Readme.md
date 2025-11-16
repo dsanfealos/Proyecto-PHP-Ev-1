@@ -61,10 +61,10 @@ Sólo apto para usuarios con rol ADMIN. En la página de cambio de imagen, muest
 Sólo apto para usuarios con rol ADMIN. En la opción de eliminación de producto, muestra mensajes de éxito/error después de redirigir a Home.
 
 ## <u>Requisitos previos</u>
-Únicamte es necesario tener docker instalado en el equipo, puesto que se creará una imagen y un contenedor con el resto de programas de entorno.
+Únicamete es necesario tener docker instalado en el equipo, puesto que se creará una imagen y un contenedor con el resto de programas de entorno.
 
 ## <u>Autor</u>
-Daniel Sanfélix Alós
+Daniel Sanfélix Alós<br>
 Github: https://github.com/dsanfealos/Proyecto-PHP-Ev-1
 
 ## <u>Licencia</u>
