@@ -40,7 +40,7 @@
                         echo ("<p class='bg-danger p-3 m-5 rounded text-white'>No tienes permisos para realizar esa acción. Necesitas haber iniciado sesión como Administrador.</p><br>");
                     }
                 }
-                
+
                 if(isset($_GET['error'])){
                     $error = $_GET['error'];
 
@@ -145,7 +145,6 @@
                     
                 </table>
                 <button class="btn btn-success"><a href="create.php" class="text-white text-decoration-none">Crear Producto</a></button>
-                <!-- TODO: Mostrar número de visitas de usuario y fecha de último login -->
             </div>
             
             

@@ -30,7 +30,6 @@
 ?>
 <html>
     <body>
-        <!-- TODO?: Menu responsive para moviles (desplegable) -->
         <nav class="bg-secondary" style="height:75px">
             <img src="favicon.ico" class="d-inline h-100">
             <h2 class="d-inline mx-3">Trapos y zapatos</h2>
