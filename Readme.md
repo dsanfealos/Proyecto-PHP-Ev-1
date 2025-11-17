@@ -44,11 +44,16 @@ Tenemos una estructura como la que sigue:
     composer require ramsey/uuid
     composer install
     ```
-5. Desplegar escribiendo en consola:
+5. En caso de estar en Linux, debemos dar permisos a nuestro directorio uploads para mover los ficheros de las imágenes:
+    ```bash
+    sudo chown www-data:www-data ./src/uploads/
+    sudo chmod 755 ./src/uploads/
+    ```
+6. Desplegar escribiendo en consola:
     ```bash
     docker compose up --build
     ```
-6. Escribir "http://localhost:8080" en la url del navegador.
+7. Escribir "http://localhost:8080" en la url del navegador.
 
 ## <u>Uso Básico</u>
 
