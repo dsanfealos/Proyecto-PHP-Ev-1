@@ -1,5 +1,5 @@
 <?php
-    include_once dirname(__FILE__) . "/../src/config/Config.php";
+    require_once dirname(__FILE__) . "/../src/config/Config.php";
     require_once dirname(__FILE__) . "/../src/services/ProductosService.php";
     require_once dirname(__FILE__) . "/../src/models/Producto.php";
 

@@ -2,8 +2,15 @@
 
 ## <u>Nombre del proyecto:</u> Trapos y Zapatos
 
+## <u>Descripción</u>
+Es una aplicación web que permite crear, modificar, eliminar, visualizar (en grupo o por separado) y cambiar la imagen de diversos productos de una tienda de ropa. Algunas de estas acciones requieren del rol de ADMIN, por lo que hay también un mecanismo de inicio y cierre de sesión.
+
 ## <u>Tecnologías utilizadas</u>
-Se han utilizado PHP, PostgreSQL, Boostrap y Docker
+Se han utilizado PHP, PostgreSQL, Boostrap, Composer y Docker.
+Las librerías especiales a utilizar han sido:
+* Dotenv, para leer las variables de entorno.
+* Ramsey, para generar uuids.
+
 ## <u>Estructura del proyecto</u>
 Tenemos una estructura como la que sigue:
 * root:   
@@ -22,28 +29,47 @@ Tenemos una estructura como la que sigue:
   * .env, .gitignore, composer.json, composer.lock, docker-compose.yaml, Dockerfile, Readme.md.
 
 ## <u>Instrucciones de instalación</u>
-1. Abrir terminal desde el directorio root del proyecto
-2. Instalar dependencias escribiendo en consola:
+1. Abrir terminal desde el directorio donde vamos a crear el proyecto.
+2. Clonar el repositorio:
+    ```bash
+    git clone https://github.com/dsanfealos/Proyecto-PHP-Ev-1
+    ```
+3. Ir a la directorio que será nuestro root:
+    ```bash
+    cd Proyecto-PHP-Ev-1
+    ```
+4. Instalar dependencias escribiendo en consola:
     ```bash
     composer require vlucas/phpdotenv
     composer require ramsey/uuid
     composer install
     ```
-3. Desplegar escribiendo en consola:
+5. Desplegar escribiendo en consola:
     ```bash
     docker compose up --build
     ```
-4. Escribir "http://localhost:8080" en la url del navegador.
+6. Escribir "http://localhost:8080" en la url del navegador.
 
 ## <u>Uso Básico</u>
-### Introducción
-Esta es una aplicación web con login que permite hacer CRUD sobre los productos, dependendiendo del rol del usuario que haya iniciado sesión.
 
 ### Navegación
 En todo momento el usuario tiene acceso a un header con navegación que le permite ir a la página Home, a la de creación de productos o iniciar/cerrar sesión, dependiendo del caso. También muestra al usuario su nombre y, si tiene rol ADMIN, también su rol. En caso de no haber iniciado sesión, muestra "Invitado".
 
 ### Login
 Si ocurre algún error al iniciar sesión, salta un aviso. En caso contrario, se redirige al usuario a la página de index.php (Home). 
+Los usuarios y contraseñas de prueba son:
+1. Admin
+     * user: admin
+     * pass: Admin1
+2. User
+     * user: user
+     * pass: User1234
+3. Test
+     * user: test
+     * pass: Test1234
+4. Otro
+     * user: otro
+     * pass: Otro1234
 
 ### Ver Productos
 En la página de home se pueden ver todos los productos, con sus detalles. Pueden filtrarse por marca o modelo, y aparecen las opciones para crear, modificar, borrar, cambiar imagen y ver detalles de cada producto.
@@ -61,7 +87,8 @@ Sólo apto para usuarios con rol ADMIN. En la página de cambio de imagen, muest
 Sólo apto para usuarios con rol ADMIN. En la opción de eliminación de producto, muestra mensajes de éxito/error después de redirigir a Home.
 
 ## <u>Requisitos previos</u>
-Únicamete es necesario tener docker instalado en el equipo, puesto que se creará una imagen y un contenedor con el resto de programas de entorno.
+Es necesario tener Docker instalado en el equipo, puesto que se creará una imagen y un contenedor con el resto de programas de entorno.
+También necesitaremos tener Composer instalado, para crear las dependencias del proyecto.
 
 ## <u>Autor</u>
 Daniel Sanfélix Alós<br>

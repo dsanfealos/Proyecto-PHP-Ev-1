@@ -1,8 +1,8 @@
 <?php
-    include_once dirname(__FILE__) . "/../src/services/SessionService.php";
+    require_once dirname(__FILE__) . "/../src/services/SessionService.php";
     include_once dirname(__FILE__) . "/../src/header.php";
     include_once dirname(__FILE__) . "/../src/footer.php";
-    include_once dirname(__FILE__) . "/../src/config/Config.php";
+    require_once dirname(__FILE__) . "/../src/config/Config.php";
 
     use config\Config;
     use models\Producto;

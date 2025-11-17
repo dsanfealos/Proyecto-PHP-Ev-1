@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS "usuarios";
 DROP SEQUENCE IF EXISTS usuarios_id_seq;
 DROP TABLE IF EXISTS "categorias";
 
--- Cuidado con las secuencias, si se borran se pierde el autoincrement
 CREATE SEQUENCE productos_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 9223372036854775807 START 1;
 CREATE TABLE "public"."productos"
 (
@@ -34,15 +33,15 @@ INSERT INTO "productos" ("is_deleted", "precio", "stock", "created_at",
     "updated_at", "categoria_id", "uuid",
     "descripcion", "imagen", "marca", "modelo")
     VALUES (false, 10.99, 5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
-        'Zapatillas deportivas', 'https://via.placeholder.com/150', 'Nike', 'Zapas 2300 Nike'),
+        'Zapatillas deportivas.', 'https://via.placeholder.com/150', 'Nike', 'Zapas 2300 Nike'),
         (false, 19.99, 10, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, gen_random_uuid(), 
-        'Chupito Ron y Cazalla', 'https://via.placeholder.com/150', 'Jagermeister', 'Chupito Turbo'),
+        'Pantalones vaqueros.', 'https://via.placeholder.com/150', 'Denim', 'Jeans 2030'),
         (false, 15.99, 2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
-        'Pantalón de entrenamiento', 'https://via.placeholder.com/150', 'Nike', 'Pantalón chandal Nike Plus'),
+        'Pantalón de entrenamiento.', 'https://via.placeholder.com/150', 'Nike', 'Pantalón chandal Nike Plus'),
         (false, 25.99, 8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, gen_random_uuid(), 
-        'Hamburguesa grande', 'https://via.placeholder.com/150', 'KFC', 'Burgesote Max'),
+        'Zapatillas con suela de goma.', 'https://via.placeholder.com/150', 'Fila', 'Saltarinas Zambullín'),
         (false, 12.99, 3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, gen_random_uuid(), 
-        'Calcetines deportivos', 'https://via.placeholder.com/150', 'Adidas', 'Calcetines Mickey');
+        'Calcetines deportivos.', 'https://via.placeholder.com/150', 'Adidas', 'Calcetines Mickey');
 
 CREATE TABLE "public"."user_roles"
 (
@@ -76,7 +75,8 @@ CREATE TABLE "public"."usuarios"
     ) WITH (oids = false);
 -- Contraseña: admin Admin1
 -- Contraseña: user User1234
--- Contraseña: test test1234
+-- Contraseña: test Test1234
+-- Contraseña: otro Otro1234
 INSERT INTO "usuarios" ("is_deleted", "created_at", "id", "updated_at", "apellidos", "email", "nombre", "password",
                         "username")
     VALUES ('f', '2023-11-02 11:43:24.724871', 1, '2023-11-02 11:43:24.724871', 'Adminez Adminoso', 'admin@prueba.net', 'Admin',

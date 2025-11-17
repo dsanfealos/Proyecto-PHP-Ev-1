@@ -1,7 +1,7 @@
 <?php
     require_once dirname(__FILE__) . "/../src/services/ProductosService.php";
-    include_once dirname(__FILE__) . "/../src/services/CategoriasService.php";
-    include_once dirname(__FILE__) . "/../src/config/Config.php";
+    require_once dirname(__FILE__) . "/../src/services/CategoriasService.php";
+    require_once dirname(__FILE__) . "/../src/config/Config.php";
 
     use services\CategoriasService;
     use config\Config;
