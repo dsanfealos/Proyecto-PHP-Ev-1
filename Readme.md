@@ -62,19 +62,6 @@ En todo momento el usuario tiene acceso a un header con navegación que le permi
 
 ### Login
 Si ocurre algún error al iniciar sesión, salta un aviso. En caso contrario, se redirige al usuario a la página de index.php (Home). 
-Los usuarios y contraseñas de prueba son:
-1. Admin
-     * user: admin
-     * pass: Admin1
-2. User
-     * user: user
-     * pass: User1234
-3. Test
-     * user: test
-     * pass: Test1234
-4. Otro
-     * user: otro
-     * pass: Otro1234
 
 ### Ver Productos
 En la página de home se pueden ver todos los productos, con sus detalles. Pueden filtrarse por marca o modelo, y aparecen las opciones para crear, modificar, borrar, cambiar imagen y ver detalles de cada producto.
